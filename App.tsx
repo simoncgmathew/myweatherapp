@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { Modal } from './components/modal-dialog';
 import { OptionsList } from './components/options-list';
 import { SimpleButton } from './components/simple-button';
 import { images } from './theme/images';
@@ -33,6 +34,23 @@ export default function App() {
       />
       <StatusBar style="auto" />
       <SimpleButton title="Do the thing!" disabled={false} />
+
+      <Modal
+        title="Custom Success"
+        content={{
+          type: 'custom',
+          element: (
+            <OptionsList
+              title="Settings"
+              rows={[
+                { title: 'Notifications', leftIcon: images.favIcon },
+                { title: 'Sounds & Haptics', leftIcon: images.favIcon },
+              ]}
+            />
+          ),
+        }}
+        show
+      />
     </View>
   );
 }
