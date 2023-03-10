@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ReactElement, useMemo, useState } from 'react';
+import { ReactElement, useCallback, useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Modal } from './components/modal-dialog';
@@ -35,11 +35,20 @@ function Accumulator(props: AccumulatorProps): ReactElement<AccumulatorProps> {
   return <Text>{allAdded}</Text>;
 }
 
+function Counter() {
+  const [counter, setCounter] = useState(0);
+
+  const onPress = useCallback(() => setCounter((currentValue) => currentValue + 1), [setCounter]);
+
+  return <Text onPress={onPress}>{`Count: ${counter}`}</Text>;
+}
+
 export default function App() {
   const [showDialog, setShowDialog] = useState(false);
   return (
     <View style={styles.container}>
       <Accumulator bigArray={[...Array(100000).keys()]} />
+      <Counter />
       <OptionsList
         title="Settings"
         rows={[
