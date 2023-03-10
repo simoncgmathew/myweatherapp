@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { OptionsList } from './components/options-list';
 import { SimpleButton } from './components/simple-button';
+import { images } from './theme/images';
 
 interface HelloWorldProps {
   shouldRenderWorld: boolean;
@@ -20,6 +22,15 @@ export default function App() {
   return (
     <View style={styles.container}>
       <HelloWorld shouldRenderWorld />
+      <OptionsList
+        title="Settings"
+        rows={[
+          { title: 'Notifications', leftIcon: images.favIcon },
+          { title: 'Sounds & Haptics', leftIcon: images.favIcon },
+          { title: 'Focus', leftIcon: images.favIcon },
+          { title: 'Screen Time', leftIcon: images.favIcon },
+        ]}
+      />
       <StatusBar style="auto" />
       <SimpleButton title="Do the thing!" disabled={false} />
     </View>
