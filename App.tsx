@@ -1,15 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
+const helloWorldStyles = StyleSheet.create({
+  text: {
+    width: '100%',
+    textAlign: 'left',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  container: {
+    width: '100%',
+    alignItems: 'center',
+    padding: 15,
+  },
+});
+
 interface HelloWorldProps {
   shouldRenderWorld: boolean;
 }
 
 function HelloWorld(props: HelloWorldProps) {
   return (
-    <View>
-      <Text>Hello</Text>
-      {props.shouldRenderWorld && <Text>World</Text>}
+    <View style={helloWorldStyles.container}>
+      <Text style={helloWorldStyles.text}>Hello</Text>
+      {props.shouldRenderWorld && <Text style={helloWorldStyles.text}>World</Text>}
     </View>
   );
 }
