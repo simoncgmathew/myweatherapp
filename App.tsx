@@ -8,6 +8,7 @@ import { SimpleButton } from './components/simple-button';
 import { colors } from './theme/colors';
 import { images } from './theme/images';
 import { metrics } from './theme/metrics';
+import { useIsMounted } from './utils/common-hooks';
 
 /**
  * Simulate an API call fetching a number. Return a random number after 5 seconds
@@ -27,36 +28,28 @@ async function fetchRandomNumber(): Promise<number> {
 function ShowRandomNumber() {
   const [result, setResult] = useState<number | undefined>();
 
-  const isMounted = useRef(false);
+  const isMounted = useIsMounted();
 
   useEffect(() => {
-    isMounted.current = true;
-
-    return function cleanup() {
-      isMounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (result === undefined) {
+    if (result == null) {
       fetchRandomNumber()
         .then((res) => {
-          if (isMounted.current) {
+          if (isMounted()) {
             setResult(res);
           }
         })
         .catch((error) => {
-          if (isMounted.current) {
+          if (isMounted()) {
             setResult(undefined);
           }
           console.warn(error);
         });
     }
-  }, [result]);
+  }, [result, setResult, isMounted]);
 
   const onPress = useCallback(() => {
     setResult(undefined);
-  }, []);
+  }, [setResult]);
 
   if (result == null) {
     return <Text>Waiting on a number</Text>;
