@@ -26,7 +26,7 @@ interface Props {
    * An optional true|false property which tells us whether or not this button should use a secondary style.
    */
   secondary?: boolean;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 export function SimpleButton(props: Props): ReactElement<Props> {
