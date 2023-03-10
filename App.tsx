@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { ReactElement, useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Modal } from './components/modal-dialog';
@@ -20,11 +20,26 @@ function HelloWorld(props: HelloWorldProps) {
   );
 }
 
+interface AccumulatorProps {
+  bigArray: number[];
+}
+
+function Accumulator(props: AccumulatorProps): ReactElement<AccumulatorProps> {
+  const allAdded = useMemo(
+    // Reduce will take an array, and turn it into a single value of the same type. In this case, it's summing all numbers in the array
+    () => props.bigArray.reduce((a, b) => a + b, 0),
+    // The dependency array says only recalculate when props.bigArray changes
+    [props.bigArray],
+  );
+
+  return <Text>{allAdded}</Text>;
+}
+
 export default function App() {
   const [showDialog, setShowDialog] = useState(false);
   return (
     <View style={styles.container}>
-      <HelloWorld shouldRenderWorld />
+      <Accumulator bigArray={[...Array(100000).keys()]} />
       <OptionsList
         title="Settings"
         rows={[
@@ -36,7 +51,6 @@ export default function App() {
       />
       <StatusBar style="auto" />
       <SimpleButton title="Show dialog" onPress={() => setShowDialog(true)} />
-
       <Modal
         title="Custom Success"
         content={{
